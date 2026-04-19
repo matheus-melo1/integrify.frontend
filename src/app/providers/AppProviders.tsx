@@ -1,6 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { ReactNode } from "react";
+import { ThemeProvider } from "@/shared/components/theme-provider";
+import { TooltipProvider } from "@/shared/components/ui/tooltip";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,7 +16,11 @@ const queryClient = new QueryClient({
 
 export const AppProviders = ({ children }: { children: ReactNode }) => (
   <QueryClientProvider client={queryClient}>
-    {children}
-    <ReactQueryDevtools initialIsOpen={false} />
+    <ThemeProvider>
+      <TooltipProvider>
+        {children}
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );

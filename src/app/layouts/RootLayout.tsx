@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { Outlet } from "react-router-dom";
+import { LoginTransitionOverlay } from "@/features/auth/components/organisms/LoginTransitionOverlay";
 
 export const RootLayout = () => (
   <Suspense
@@ -8,5 +9,6 @@ export const RootLayout = () => (
     }
   >
     <Outlet />
+    <LoginTransitionOverlay />
   </Suspense>
 );

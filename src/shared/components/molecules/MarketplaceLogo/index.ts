@@ -1,0 +1,1 @@
+export { MarketplaceLogo } from "./MarketplaceLogo";
