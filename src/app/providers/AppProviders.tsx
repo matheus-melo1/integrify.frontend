@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { ReactNode } from "react";
 import { ThemeProvider } from "@/shared/components/theme-provider";
 import { TooltipProvider } from "@/shared/components/ui/tooltip";
+import { Toaster } from "@/shared/components/ui/sonner";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,7 +19,7 @@ export const AppProviders = ({ children }: { children: ReactNode }) => (
     <ThemeProvider>
       <TooltipProvider>
         {children}
-        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+        <Toaster richColors position="top-right" />
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>
