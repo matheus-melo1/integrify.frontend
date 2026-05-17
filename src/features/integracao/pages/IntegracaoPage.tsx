@@ -3,7 +3,7 @@ import { IntegrationsGrid } from "../components/organisms/IntegrationsGrid";
 import { useIntegrations } from "../hooks/useIntegrations";
 
 const IntegracaoPage = () => {
-  const { integrations, stats } = useIntegrations();
+  const { integrations, stats, isLoading } = useIntegrations();
 
   return (
     <div className="min-h-full w-full flex flex-col gap-6">
@@ -12,7 +12,7 @@ const IntegracaoPage = () => {
         connected={stats.connected}
         issues={stats.issues}
       />
-      <IntegrationsGrid integrations={integrations} />
+      <IntegrationsGrid integrations={integrations} isLoading={isLoading} />
     </div>
   );
 };
