@@ -3,37 +3,50 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/app/router/routes";
+import { to } from "@/shared/lib/to";
 import {
   integrationSchema,
   type IntegrationFormData,
 } from "../schemas/integration.schema";
-import type { MarketplaceOption } from "../types/integration.types";
+import type {
+  Integration,
+  MarketplaceOption,
+} from "../types/integration.types";
+import { useCreateIntegrationMutation } from "../services/integration.queries";
 
 const OPTIONS: MarketplaceOption[] = [
   {
-    marketplace: "mercado-livre",
+    marketplace: "mercadolibre",
     description: "Conecte sua conta do Mercado Livre via OAuth.",
   },
   {
-    marketplace: "shopee",
+    marketplace: "shoppe",
     description: "Sincronize anúncios e pedidos da sua loja Shopee.",
   },
   { marketplace: "amazon", description: "Vendor Central · Brasil." },
-  { marketplace: "amazon-us", description: "Seller Central · Estados Unidos." },
-  { marketplace: "magalu", description: "Marketplace Magalu via Magalu Pay." },
+  {
+    marketplace: "magalu",
+    description: "Integre seu seller Magalu via API.",
+  },
 ];
 
 const defaultValues: IntegrationFormData = {
-  marketplace: "mercado-livre",
+  marketplace: "mercadolibre",
   name: "",
-  apiKey: "",
-  syncStock: true,
-  syncOrders: true,
+  api_key: "",
+  stock_sync: true,
+  order_sync: true,
 };
 
-export const useNewIntegration = () => {
+type UseNewIntegrationOptions = {
+  onSuccess?: (integration: Integration) => void;
+  onCancel?: () => void;
+};
+
+export const useNewIntegration = (options: UseNewIntegrationOptions = {}) => {
   const navigate = useNavigate();
-  const options = useMemo(() => OPTIONS, []);
+  const marketplaceOptions = useMemo(() => OPTIONS, []);
+  const { mutateAsync, isPending } = useCreateIntegrationMutation();
 
   const form = useForm<IntegrationFormData>({
     resolver: zodResolver(integrationSchema),
@@ -41,21 +54,31 @@ export const useNewIntegration = () => {
     mode: "onChange",
   });
 
-  const onSubmit = form.handleSubmit((data) => {
-    // TODO: integrar com serviço TanStack Query (integration.service.ts)
-    console.log("[new integration]", data);
+  const onSubmit = form.handleSubmit(async (data) => {
+    const [err, created] = await to(mutateAsync(data));
+    if (err) return;
+    if (options.onSuccess) {
+      options.onSuccess(created);
+      return;
+    }
     navigate(ROUTES.INTEGRACAO);
   });
 
-  const onCancel = () => navigate(ROUTES.INTEGRACAO);
+  const onCancel = () => {
+    if (options.onCancel) {
+      options.onCancel();
+      return;
+    }
+    navigate(ROUTES.INTEGRACAO);
+  };
 
   return {
-    options,
+    options: marketplaceOptions,
     control: form.control,
     setValue: form.setValue,
     onSubmit,
     onCancel,
     isValid: form.formState.isValid,
-    isSubmitting: form.formState.isSubmitting,
+    isSubmitting: isPending,
   };
 };
