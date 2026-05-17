@@ -8,12 +8,12 @@ type Tone = {
 };
 
 const MAP: Record<Marketplace, Tone> = {
-  "mercado-livre": {
+  mercadolibre: {
     label: "Mercado Livre",
     initials: "ML",
     logoClass: "bg-yellow-400 text-yellow-950",
   },
-  shopee: {
+  shoppe: {
     label: "Shopee",
     initials: "SH",
     logoClass: "bg-orange-500 text-white",
@@ -23,15 +23,10 @@ const MAP: Record<Marketplace, Tone> = {
     initials: "AM",
     logoClass: "bg-amber-700 text-white",
   },
-  "amazon-us": {
-    label: "Amazon US",
-    initials: "US",
-    logoClass: "bg-blue-600 text-white",
-  },
   magalu: {
     label: "Magalu",
     initials: "MG",
-    logoClass: "bg-pink-500 text-white",
+    logoClass: "bg-sky-500 text-white",
   },
 };
 

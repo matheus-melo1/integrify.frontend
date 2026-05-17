@@ -1,9 +1,4 @@
-export type Marketplace =
-  | "mercado-livre"
-  | "shopee"
-  | "amazon"
-  | "magalu"
-  | "amazon-us";
+export type Marketplace = "amazon" | "shoppe" | "mercadolibre" | "magalu";
 
 export type Member = {
   id: string;
