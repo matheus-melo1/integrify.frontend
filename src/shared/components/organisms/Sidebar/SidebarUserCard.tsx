@@ -1,8 +1,19 @@
 import { ChevronDown } from "lucide-react";
-import { FaUserCircle } from "react-icons/fa";
 import GradientBorder from "../../molecules/GradientBorder/GradientBorder";
+import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar";
 import { SidebarUserDropdown } from "./SidebarUserDropdown";
 import { useSidebarUserMenu } from "@/shared/hooks/useSidebarUserMenu";
+
+const AVATAR_URL =
+  "https://i.pinimg.com/originals/0e/99/fb/0e99fb7da38a7d3bd2062895f9e07741.gif";
+
+const initialsOf = (name: string) =>
+  name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p[0]?.toUpperCase())
+    .join("") || "?";
 
 type Props = {
   name: string;
@@ -17,9 +28,12 @@ export function SidebarUserCard({ name }: Props) {
       trigger={
         <GradientBorder className="p-[1px] !rounded-2xl! cursor-pointer">
           <div className="group w-full h-full bg-background flex items-center justify-between p-2.5 rounded-full transition-all duration-200 hover:bg-neutral-900/60">
-            <div className="flex items-center gap-2.5">
-              <GradientBorder className="p-[0.2px] from-white/20 via-white/15 to-white/20 w-auto rounded-xl">
-                <FaUserCircle size={30} className="text-zinc-900" />
+            <div className="flex items-center gap-2.5 min-w-0">
+              <GradientBorder className="p-[1px]! w-fit! h-fit! from-white/40! via-neutral-900/40! to-white/30!">
+                <Avatar className="size-8!">
+                  <AvatarImage src={AVATAR_URL} alt={name} />
+                  <AvatarFallback>{initialsOf(name)}</AvatarFallback>
+                </Avatar>
               </GradientBorder>
               <p className="font-normal truncate">{name}</p>
             </div>

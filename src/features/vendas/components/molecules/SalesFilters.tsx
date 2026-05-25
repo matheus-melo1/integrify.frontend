@@ -52,11 +52,9 @@ export function SalesFilters({
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Todos os marketplaces</SelectItem>
-          <SelectItem value="mercado-livre">Mercado Livre</SelectItem>
-          <SelectItem value="shopee">Shopee</SelectItem>
+          <SelectItem value="mercadolibre">Mercado Livre</SelectItem>
+          <SelectItem value="shoppe">Shopee</SelectItem>
           <SelectItem value="amazon">Amazon</SelectItem>
-          <SelectItem value="amazon-us">Amazon US</SelectItem>
-          <SelectItem value="magalu">Magalu</SelectItem>
         </SelectContent>
       </Select>
 

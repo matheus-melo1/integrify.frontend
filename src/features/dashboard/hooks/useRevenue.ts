@@ -21,10 +21,10 @@ export type MarketplaceRevenue = {
 };
 
 const BREAKDOWN_BRL: MarketplaceRevenue[] = [
-  { marketplace: "mercado-livre", amount: 9837.21, share: 42.6, variation: 8.4 },
-  { marketplace: "shopee", amount: 6428.13, share: 27.8, variation: -3.2 },
+  { marketplace: "mercadolibre", amount: 9837.21, share: 42.6, variation: 8.4 },
+  { marketplace: "shoppe", amount: 6428.13, share: 27.8, variation: -3.2 },
   { marketplace: "amazon", amount: 4218.55, share: 18.3, variation: 12.7 },
-  { marketplace: "magalu", amount: 2610.68, share: 11.3, variation: -1.5 },
+  { marketplace: "mercadolibre", amount: 2610.68, share: 11.3, variation: -1.5 },
 ];
 
 const TREND = [

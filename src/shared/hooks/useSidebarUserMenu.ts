@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { UserRound, Palette, Gift, LogOut, type LucideIcon } from "lucide-react";
+import { ROUTES } from "@/app/router/routes";
 
 export type SidebarUserMenuItem = {
   id: string;
@@ -17,7 +18,7 @@ export const useSidebarUserMenu = () => {
       id: "account",
       label: "Conta",
       icon: UserRound,
-      onSelect: () => navigate("/perfil"),
+      onSelect: () => navigate(ROUTES.PROFILE),
     },
     {
       id: "appearance",

@@ -5,7 +5,7 @@ const STORES: Store[] = [
   {
     id: "1",
     name: "Pela Design",
-    marketplace: "shopee",
+    marketplace: "shoppe",
     followers: 3074,
     variation: 9.23,
     members: [
@@ -18,7 +18,7 @@ const STORES: Store[] = [
   {
     id: "2",
     name: "Elixir Ads",
-    marketplace: "mercado-livre",
+    marketplace: "mercadolibre",
     followers: 2931,
     variation: 7.59,
     members: [
@@ -41,7 +41,7 @@ const STORES: Store[] = [
   {
     id: "4",
     name: "Casa & Decor",
-    marketplace: "magalu",
+    marketplace: "mercadolibre",
     followers: 1240,
     variation: 4.31,
     members: [{ id: "j", name: "Júlia" }],
@@ -49,7 +49,7 @@ const STORES: Store[] = [
   {
     id: "5",
     name: "FitWear",
-    marketplace: "shopee",
+    marketplace: "shoppe",
     followers: 998,
     variation: 12.04,
     members: [

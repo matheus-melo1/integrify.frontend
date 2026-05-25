@@ -1,6 +1,9 @@
 import { api } from "@/shared/lib/axios";
 import type { ApiResponse } from "@/shared/types/api.types";
-import type { Integration, IntegrationRequest } from "../types/integration.types";
+import type {
+  Integration,
+  IntegrationRequest,
+} from "../types/integration.types";
 
 interface IIntegrationService {
   list(): Promise<Integration[]>;
@@ -20,36 +23,34 @@ const unwrap = <T>(envelope: ApiResponse<T>): T => {
 class IntegrationService implements IIntegrationService {
   list() {
     return api
-      .get<ApiResponse<Integration[] | null>>("/integration")
+      .get<ApiResponse<Integration[] | null>>("/api/integration")
       .then((r) => unwrap(r.data) ?? []);
   }
 
   getById(id: string) {
     return api
-      .get<ApiResponse<Integration>>(`/integration/${id}`)
+      .get<ApiResponse<Integration>>(`/api/integration/${id}`)
       .then((r) => unwrap(r.data));
   }
 
   create(body: IntegrationRequest) {
     return api
-      .post<ApiResponse<Integration>>("/integration", body)
+      .post<ApiResponse<Integration>>("/api/integration", body)
       .then((r) => unwrap(r.data));
   }
 
   update(id: string, body: IntegrationRequest) {
     return api
-      .put<ApiResponse<null>>(`/integration/${id}`, body)
+      .put<ApiResponse<null>>(`/api/integration/${id}`, body)
       .then((r) => {
         unwrap(r.data);
       });
   }
 
   remove(id: string) {
-    return api
-      .delete<ApiResponse<null>>(`/integration/${id}`)
-      .then((r) => {
-        unwrap(r.data);
-      });
+    return api.delete<ApiResponse<null>>(`/api/integration/${id}`).then((r) => {
+      unwrap(r.data);
+    });
   }
 }
 

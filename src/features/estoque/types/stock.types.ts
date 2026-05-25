@@ -7,9 +7,21 @@ export type Stock = {
   sku: string;
   name: string;
   marketplace: Marketplace;
-  quantity: number;
+  stock: number;
   price: number;
-  imageUrl: string;
+  image: string;
   status: StockStatus;
-  updatedAt: string;
+  description?: string;
+  org_id?: string;
+  is_deleted?: boolean;
 };
+
+const VALID_STATUSES: ReadonlySet<StockStatus> = new Set([
+  "active",
+  "low",
+  "out-of-stock",
+  "paused",
+]);
+
+export const normalizeStatus = (s: string): StockStatus =>
+  VALID_STATUSES.has(s as StockStatus) ? (s as StockStatus) : "active";

@@ -7,7 +7,7 @@ import { Toaster } from "@/shared/components/ui/sonner";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5,
+      staleTime: 2000,
       retry: 1,
       refetchOnWindowFocus: false,
     },
@@ -19,7 +19,7 @@ export const AppProviders = ({ children }: { children: ReactNode }) => (
     <ThemeProvider>
       <TooltipProvider>
         {children}
-        <Toaster richColors position="top-right" />
+        <Toaster position="top-center" />
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>

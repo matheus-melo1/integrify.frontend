@@ -22,20 +22,31 @@ import {
   STATUS_OPTIONS,
   type ProductFormData,
 } from "../../schemas/product.schema";
+import type { Stock } from "../../types/stock.types";
+
+export const NEW_PRODUCT_FORM_ID = "new-product-form";
 
 type SectionProps = {
   title: string;
   description?: string;
   children: React.ReactNode;
   className?: string;
+  compact?: boolean;
 };
 
-function Section({ title, description, children, className }: SectionProps) {
+function Section({
+  title,
+  description,
+  children,
+  className,
+  compact,
+}: SectionProps) {
   return (
     <GradientBorder className="p-[0.8px]! from-white/15 via-white/5 to-white/10 rounded-2xl!">
       <div
         className={cn(
-          "rounded-2xl bg-neutral-900/80 p-5 flex flex-col gap-4",
+          "rounded-2xl bg-neutral-900/80 flex flex-col",
+          compact ? "p-4 gap-3" : "p-5 gap-4",
           className,
         )}
       >
@@ -57,7 +68,7 @@ function PreviewCard({
   control: ReturnType<typeof useProductForm>["control"];
 }) {
   const values = useWatch({ control }) as Partial<ProductFormData>;
-  const hasImage = !!values.imageUrl;
+  const hasImage = !!values.image;
   const marketplaceLabel =
     MARKETPLACE_OPTIONS.find((o) => o.value === values.marketplace)?.label ??
     "—";
@@ -72,7 +83,7 @@ function PreviewCard({
         <div className="relative aspect-[4/3] bg-neutral-950 overflow-hidden">
           {hasImage ? (
             <img
-              src={values.imageUrl}
+              src={values.image}
               alt={values.name ?? "Prévia"}
               className="absolute inset-0 w-full h-full object-cover"
               onError={(e) => {
@@ -107,108 +118,151 @@ function PreviewCard({
   );
 }
 
-export function NewProductForm() {
-  const { control, onSubmit, onCancel, isSubmitting } = useProductForm();
+type NewProductFormProps = {
+  variant?: "page" | "drawer";
+  mode?: "create" | "edit";
+  initialStock?: Stock;
+  submitLabel?: string;
+  onSuccess?: (data: ProductFormData) => void;
+  onCancel?: () => void;
+  hideActions?: boolean;
+};
 
-  return (
-    <form
-      onSubmit={onSubmit}
-      className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-5"
-    >
-      <div className="flex flex-col gap-4">
-        <Section
-          title="Identificação"
-          description="Como o produto aparece no marketplace."
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <InputForm
-              size="compact"
-              control={control}
-              name="name"
-              label="Nome do produto"
-              placeholder="Ex: Cafeteira Elétrica 110V"
-              icon={Package}
-            />
-            <InputForm
-              size="compact"
-              control={control}
-              name="sku"
-              label="SKU"
-              placeholder="Ex: SKU-10293"
-              icon={Hash}
-            />
-          </div>
-          <TextareaForm
-            size="compact"
-            control={control}
-            name="description"
-            label="Descrição"
-            placeholder="Detalhes, materiais, dimensões…"
-            icon={FileText}
-            rows={3}
-          />
-        </Section>
+export function NewProductForm({
+  variant = "page",
+  mode = "create",
+  initialStock,
+  submitLabel,
+  onSuccess,
+  onCancel: onCancelProp,
+  hideActions = false,
+}: NewProductFormProps) {
+  const { control, onSubmit, onCancel, isSubmitting } = useProductForm({
+    mode,
+    initialStock,
+    onSuccess,
+    onCancel: onCancelProp,
+  });
 
-        <Section
-          title="Marketplace & status"
-          description="Onde e em que estado o produto será listado."
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <SelectForm
-              size="compact"
-              control={control}
-              name="marketplace"
-              label="Marketplace"
-              placeholder="Selecione"
-              icon={Store}
-              options={[...MARKETPLACE_OPTIONS]}
-            />
-            <SelectForm
-              size="compact"
-              control={control}
-              name="status"
-              label="Status"
-              placeholder="Selecione"
-              icon={BadgeCheck}
-              options={[...STATUS_OPTIONS]}
-            />
-          </div>
-        </Section>
+  const effectiveLabel =
+    submitLabel ?? (mode === "edit" ? "Atualizar produto" : "Salvar produto");
 
-        <Section
-          title="Estoque & preço"
-          description="Disponibilidade e valor de venda."
+  const isDrawer = variant === "drawer";
+
+  const sections = (
+    <div className={cn("flex flex-col", isDrawer ? "gap-3" : "gap-4")}>
+      <Section
+        title="Identificação"
+        description="Como o produto aparece no marketplace."
+        compact={isDrawer}
+      >
+        <div
+          className={cn(
+            "grid gap-3",
+            isDrawer ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2",
+          )}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <InputForm
-              size="compact"
-              control={control}
-              name="quantity"
-              label="Quantidade"
-              placeholder="0"
-              type="number"
-              icon={Boxes}
-            />
-            <InputForm
-              size="compact"
-              control={control}
-              name="price"
-              label="Preço"
-              placeholder="0,00"
-              format="money"
-              icon={DollarSign}
-            />
-          </div>
           <InputForm
             size="compact"
             control={control}
-            name="imageUrl"
-            label="URL da imagem"
-            placeholder="https://…"
-            icon={ImageIcon}
+            name="name"
+            label="Nome do produto"
+            placeholder="Ex: Cafeteira Elétrica 110V"
+            icon={Package}
           />
-        </Section>
+          <InputForm
+            size="compact"
+            control={control}
+            name="sku"
+            label="SKU"
+            placeholder="Ex: SKU-10293"
+            icon={Hash}
+          />
+        </div>
+        <TextareaForm
+          size="compact"
+          control={control}
+          name="description"
+          label="Descrição"
+          placeholder="Detalhes, materiais, dimensões…"
+          icon={FileText}
+          rows={3}
+        />
+      </Section>
 
+      <Section
+        title="Marketplace & status"
+        description="Onde e em que estado o produto será listado."
+        compact={isDrawer}
+      >
+        <div
+          className={cn(
+            "grid gap-3",
+            isDrawer ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2",
+          )}
+        >
+          <SelectForm
+            size="compact"
+            control={control}
+            name="marketplace"
+            label="Marketplace"
+            placeholder="Selecione"
+            icon={Store}
+            options={[...MARKETPLACE_OPTIONS]}
+          />
+          <SelectForm
+            size="compact"
+            control={control}
+            name="status"
+            label="Status"
+            placeholder="Selecione"
+            icon={BadgeCheck}
+            options={[...STATUS_OPTIONS]}
+          />
+        </div>
+      </Section>
+
+      <Section
+        title="Estoque & preço"
+        description="Disponibilidade e valor de venda."
+        compact={isDrawer}
+      >
+        <div
+          className={cn(
+            "grid gap-3",
+            isDrawer ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2",
+          )}
+        >
+          <InputForm
+            size="compact"
+            control={control}
+            name="stock"
+            label="Quantidade"
+            placeholder="0"
+            type="number"
+            icon={Boxes}
+          />
+          <InputForm
+            size="compact"
+            control={control}
+            name="price"
+            label="Preço"
+            placeholder="0,00"
+            format="money"
+            icon={DollarSign}
+          />
+        </div>
+        <InputForm
+          size="compact"
+          control={control}
+          name="image"
+          label="URL da imagem"
+          placeholder="https://…"
+          icon={ImageIcon}
+        />
+      </Section>
+
+      {!hideActions && (
         <div className="flex items-center justify-end gap-2 pt-1">
           <Button
             type="button"
@@ -224,11 +278,28 @@ export function NewProductForm() {
             disabled={isSubmitting}
             className="h-9 px-4 py-0 text-xs gap-2 [--radius:0.5rem]"
           >
-            Salvar produto
+            {effectiveLabel}
           </ShimmerButton>
         </div>
-      </div>
+      )}
+    </div>
+  );
 
+  if (isDrawer) {
+    return (
+      <form id={NEW_PRODUCT_FORM_ID} onSubmit={onSubmit}>
+        {sections}
+      </form>
+    );
+  }
+
+  return (
+    <form
+      id={NEW_PRODUCT_FORM_ID}
+      onSubmit={onSubmit}
+      className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-5"
+    >
+      {sections}
       <PreviewCard control={control} />
     </form>
   );

@@ -1,14 +1,30 @@
-import { Search } from "lucide-react";
+import { ChevronDown, Search } from "lucide-react";
+import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/shared/components/ui/select";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/shared/components/ui/dropdown-menu";
 import type { Marketplace } from "@/shared/types/marketplace.types";
 import type { StockStatus } from "../../types/stock.types";
+
+const MARKETPLACE_LABELS: Record<string, string> = {
+  all: "Todos os marketplaces",
+  mercadolibre: "Mercado Livre",
+  shoppe: "Shopee",
+  amazon: "Amazon",
+};
+
+const STATUS_LABELS: Record<string, string> = {
+  all: "Todos os status",
+  active: "Ativo",
+  low: "Estoque baixo",
+  "out-of-stock": "Esgotado",
+  paused: "Pausado",
+};
 
 type Props = {
   search: string;
@@ -28,8 +44,8 @@ export function StockFilters({
   onStatusChange,
 }: Props) {
   return (
-    <div className="flex flex-wrap gap-2 items-center">
-      <div className="relative flex-1 min-w-[220px]">
+    <div className="flex flex-col gap-2 md:flex-row md:flex-wrap md:items-center">
+      <div className="relative w-full md:flex-1 md:min-w-[220px]">
         <Search
           size={14}
           className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
@@ -42,38 +58,84 @@ export function StockFilters({
         />
       </div>
 
-      <Select
-        value={marketplace}
-        onValueChange={(v) => onMarketplaceChange(v as Marketplace | "all")}
-      >
-        <SelectTrigger className="w-[160px] h-9 text-xs bg-neutral-900 border-neutral-800">
-          <SelectValue placeholder="Marketplace" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">Todos os marketplaces</SelectItem>
-          <SelectItem value="mercado-livre">Mercado Livre</SelectItem>
-          <SelectItem value="shopee">Shopee</SelectItem>
-          <SelectItem value="amazon">Amazon</SelectItem>
-          <SelectItem value="amazon-us">Amazon US</SelectItem>
-          <SelectItem value="magalu">Magalu</SelectItem>
-        </SelectContent>
-      </Select>
+      <div className="grid grid-cols-2 gap-2 md:contents">
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={
+              <Button
+                variant="outline"
+                className="w-full md:w-[160px] h-9 text-xs bg-neutral-900 border-neutral-800 justify-between font-normal"
+              />
+            }
+          >
+            <span className="truncate">{MARKETPLACE_LABELS[marketplace]}</span>
+            <ChevronDown size={14} className="opacity-50 shrink-0" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="start"
+            sideOffset={6}
+            className="min-w-(--anchor-width)"
+          >
+            <DropdownMenuRadioGroup
+              value={marketplace}
+              onValueChange={(v) =>
+                onMarketplaceChange(v as Marketplace | "all")
+              }
+            >
+              <DropdownMenuRadioItem value="all">
+                Todos os marketplaces
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="mercadolibre">
+                Mercado Livre
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="shoppe">
+                Shopee
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="amazon">
+                Amazon
+              </DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
-      <Select
-        value={status}
-        onValueChange={(v) => onStatusChange(v as StockStatus | "all")}
-      >
-        <SelectTrigger className="w-[160px] h-9 text-xs bg-neutral-900 border-neutral-800">
-          <SelectValue placeholder="Status" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">Todos os status</SelectItem>
-          <SelectItem value="active">Ativo</SelectItem>
-          <SelectItem value="low">Estoque baixo</SelectItem>
-          <SelectItem value="out-of-stock">Esgotado</SelectItem>
-          <SelectItem value="paused">Pausado</SelectItem>
-        </SelectContent>
-      </Select>
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={
+              <Button
+                variant="outline"
+                className="w-full md:w-[160px] h-9 text-xs bg-neutral-900 border-neutral-800 justify-between font-normal"
+              />
+            }
+          >
+            <span className="truncate">{STATUS_LABELS[status]}</span>
+            <ChevronDown size={14} className="opacity-50 shrink-0" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="start"
+            sideOffset={6}
+            className="min-w-(--anchor-width)"
+          >
+            <DropdownMenuRadioGroup
+              value={status}
+              onValueChange={(v) => onStatusChange(v as StockStatus | "all")}
+            >
+              <DropdownMenuRadioItem value="all">
+                Todos os status
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="active">Ativo</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="low">
+                Estoque baixo
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="out-of-stock">
+                Esgotado
+              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="paused">
+                Pausado
+              </DropdownMenuRadioItem>
+            </DropdownMenuRadioGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </div>
   );
 }
