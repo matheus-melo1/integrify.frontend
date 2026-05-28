@@ -7,7 +7,6 @@ import {
   Hash,
   ImageIcon,
   Package,
-  Store,
 } from "lucide-react";
 import { InputForm } from "@/shared/components/form/InputForm";
 import { SelectForm } from "@/shared/components/form/SelectForm";
@@ -18,7 +17,6 @@ import GradientBorder from "@/shared/components/molecules/GradientBorder/Gradien
 import { cn } from "@/shared/lib/utils";
 import { useProductForm } from "../../hooks/useProductForm";
 import {
-  MARKETPLACE_OPTIONS,
   STATUS_OPTIONS,
   type ProductFormData,
 } from "../../schemas/product.schema";
@@ -69,9 +67,6 @@ function PreviewCard({
 }) {
   const values = useWatch({ control }) as Partial<ProductFormData>;
   const hasImage = !!values.image;
-  const marketplaceLabel =
-    MARKETPLACE_OPTIONS.find((o) => o.value === values.marketplace)?.label ??
-    "—";
   const statusLabel =
     STATUS_OPTIONS.find((o) => o.value === values.status)?.label ?? "—";
   const priceDisplay =
@@ -108,7 +103,7 @@ function PreviewCard({
           </div>
           <div className="flex items-center justify-between pt-2 border-t border-neutral-800">
             <span className="text-[11px] text-muted-foreground">
-              {marketplaceLabel} · {statusLabel}
+              {statusLabel}
             </span>
             <span className="text-sm font-medium">{priceDisplay}</span>
           </div>
@@ -153,7 +148,7 @@ export function NewProductForm({
     <div className={cn("flex flex-col", isDrawer ? "gap-3" : "gap-4")}>
       <Section
         title="Identificação"
-        description="Como o produto aparece no marketplace."
+        description="Como o produto será listado."
         compact={isDrawer}
       >
         <div
@@ -191,35 +186,19 @@ export function NewProductForm({
       </Section>
 
       <Section
-        title="Marketplace & status"
-        description="Onde e em que estado o produto será listado."
+        title="Status"
+        description="Em que estado o produto será listado."
         compact={isDrawer}
       >
-        <div
-          className={cn(
-            "grid gap-3",
-            isDrawer ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2",
-          )}
-        >
-          <SelectForm
-            size="compact"
-            control={control}
-            name="marketplace"
-            label="Marketplace"
-            placeholder="Selecione"
-            icon={Store}
-            options={[...MARKETPLACE_OPTIONS]}
-          />
-          <SelectForm
-            size="compact"
-            control={control}
-            name="status"
-            label="Status"
-            placeholder="Selecione"
-            icon={BadgeCheck}
-            options={[...STATUS_OPTIONS]}
-          />
-        </div>
+        <SelectForm
+          size="compact"
+          control={control}
+          name="status"
+          label="Status"
+          placeholder="Selecione"
+          icon={BadgeCheck}
+          options={[...STATUS_OPTIONS]}
+        />
       </Section>
 
       <Section

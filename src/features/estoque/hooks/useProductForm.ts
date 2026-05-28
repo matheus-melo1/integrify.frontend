@@ -14,7 +14,6 @@ import type { Stock } from "../types/stock.types";
 const createDefaults: ProductFormData = {
   name: "",
   sku: "",
-  marketplace: "mercadolibre",
   status: "active",
   stock: "",
   price: "",
@@ -25,7 +24,6 @@ const createDefaults: ProductFormData = {
 const stockToFormData = (stock: Stock): ProductFormData => ({
   name: stock.name,
   sku: stock.sku,
-  marketplace: stock.marketplace,
   status: stock.status,
   stock: String(stock.stock),
   price: formatPrice(stock.price),

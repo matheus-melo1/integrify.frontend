@@ -1,5 +1,4 @@
 import { useMemo, useState } from "react";
-import type { Marketplace } from "@/shared/types/marketplace.types";
 import type { StockStatus } from "../types/stock.types";
 import { useStoragesQuery } from "../services/storage.queries";
 
@@ -9,14 +8,12 @@ export const useStockList = () => {
   const { data, isLoading, isError, refetch } = useStoragesQuery();
 
   const [search, setSearch] = useState("");
-  const [marketplace, setMarketplace] = useState<Marketplace | "all">("all");
   const [status, setStatus] = useState<StockStatus | "all">("all");
   const [page, setPage] = useState(0);
 
   const filtered = useMemo(() => {
     const term = search.trim().toLowerCase();
     return (data ?? []).filter((s) => {
-      if (marketplace !== "all" && s.marketplace !== marketplace) return false;
       if (status !== "all" && s.status !== status) return false;
       if (!term) return true;
       return (
@@ -24,7 +21,7 @@ export const useStockList = () => {
         s.sku.toLowerCase().includes(term)
       );
     });
-  }, [data, search, marketplace, status]);
+  }, [data, search, status]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const safePage = Math.min(page, totalPages - 1);
@@ -34,11 +31,6 @@ export const useStockList = () => {
     search,
     setSearch: (v: string) => {
       setSearch(v);
-      setPage(0);
-    },
-    marketplace,
-    setMarketplace: (v: Marketplace | "all") => {
-      setMarketplace(v);
       setPage(0);
     },
     status,

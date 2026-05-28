@@ -12,7 +12,6 @@ import {
   TableRow,
 } from "@/shared/components/ui/table";
 import { SurfaceCard } from "@/shared/components/molecules/SurfaceCard/SurfaceCard";
-import { MarketplaceLogo } from "@/shared/components/molecules/MarketplaceLogo";
 import { StockFilters } from "../molecules/StockFilters";
 import { StockStatusBadge } from "../molecules/StockStatusBadge";
 import { StockImage } from "../molecules/StockImage";
@@ -34,8 +33,6 @@ export function EstoqueTableView({ list }: Props) {
   const {
     search,
     setSearch,
-    marketplace,
-    setMarketplace,
     status,
     setStatus,
     page,
@@ -58,8 +55,6 @@ export function EstoqueTableView({ list }: Props) {
       <StockFilters
         search={search}
         onSearchChange={setSearch}
-        marketplace={marketplace}
-        onMarketplaceChange={setMarketplace}
         status={status}
         onStatusChange={setStatus}
       />
@@ -71,9 +66,6 @@ export function EstoqueTableView({ list }: Props) {
               <TableHead className="text-xs text-muted-foreground">SKU</TableHead>
               <TableHead className="text-xs text-muted-foreground">
                 Produto
-              </TableHead>
-              <TableHead className="text-xs text-muted-foreground">
-                Marketplace
               </TableHead>
               <TableHead className="text-xs text-muted-foreground text-right">
                 Estoque
@@ -105,9 +97,6 @@ export function EstoqueTableView({ list }: Props) {
                       <Skeleton className="h-3 w-40" />
                     </div>
                   </TableCell>
-                  <TableCell>
-                    <Skeleton className="h-3 w-24" />
-                  </TableCell>
                   <TableCell className="text-right">
                     <Skeleton className="h-3 w-10 ml-auto" />
                   </TableCell>
@@ -125,7 +114,7 @@ export function EstoqueTableView({ list }: Props) {
 
             {!isLoading && isError && (
               <TableRow className="border-neutral-700/60 hover:bg-transparent">
-                <TableCell colSpan={7} className="py-8">
+                <TableCell colSpan={6} className="py-8">
                   <div className="flex flex-col items-center gap-2 text-xs text-muted-foreground">
                     <span>Não foi possível carregar os produtos.</span>
                     <Button
@@ -143,7 +132,7 @@ export function EstoqueTableView({ list }: Props) {
             {!isLoading && !isError && items.length === 0 && (
               <TableRow className="border-neutral-700/60 hover:bg-transparent">
                 <TableCell
-                  colSpan={7}
+                  colSpan={6}
                   className="text-center text-xs text-muted-foreground py-8"
                 >
                   Nenhum produto encontrado com esses filtros.
@@ -171,9 +160,6 @@ export function EstoqueTableView({ list }: Props) {
                       />
                       <span className="font-medium text-sm">{stock.name}</span>
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    <MarketplaceLogo marketplace={stock.marketplace} />
                   </TableCell>
                   <TableCell className="text-right text-sm tabular-nums">
                     {stock.stock}

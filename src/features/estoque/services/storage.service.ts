@@ -19,13 +19,12 @@ const parseBRLToNumber = (s: string): number => {
 
 const toBody = (data: ProductFormData) => ({
   sku: data.sku,
-  image: data.image || "",
   name: data.name,
-  description: data.description || "",
   stock: Number(data.stock) || 0,
-  marketplace: data.marketplace,
   price: parseBRLToNumber(data.price),
   status: data.status,
+  image: data.image || "",
+  description: data.description || "",
 });
 
 const normalizeStock = (s: Stock): Stock => ({

@@ -1,12 +1,5 @@
 import { z } from "zod";
 
-export const MARKETPLACE_OPTIONS = [
-  { value: "mercadolibre", label: "Mercado Livre" },
-  { value: "shoppe", label: "Shopee" },
-  { value: "amazon", label: "Amazon" },
-  { value: "magalu", label: "Magalu" },
-] as const;
-
 export const STATUS_OPTIONS = [
   { value: "active", label: "Ativo" },
   { value: "low", label: "Estoque baixo" },
@@ -21,9 +14,6 @@ export const productSchema = z.object({
   sku: z
     .string({ message: "SKU é obrigatório" })
     .min(3, "Mínimo 3 caracteres"),
-  marketplace: z.enum(["amazon", "shoppe", "mercadolibre", "magalu"], {
-    message: "Selecione um marketplace",
-  }),
   status: z.enum(["active", "low", "out-of-stock", "paused"], {
     message: "Selecione um status",
   }),

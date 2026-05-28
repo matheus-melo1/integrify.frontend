@@ -1,12 +1,9 @@
-import type { Marketplace } from "@/shared/types/marketplace.types";
-
 export type StockStatus = "active" | "low" | "out-of-stock" | "paused";
 
 export type Stock = {
   id: string;
   sku: string;
   name: string;
-  marketplace: Marketplace;
   stock: number;
   price: number;
   image: string;

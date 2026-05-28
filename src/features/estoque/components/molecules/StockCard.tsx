@@ -1,5 +1,4 @@
 import GradientBorder from "@/shared/components/molecules/GradientBorder/GradientBorder";
-import { MarketplaceLogo } from "@/shared/components/molecules/MarketplaceLogo";
 import { StockStatusBadge } from "./StockStatusBadge";
 import { StockImage } from "./StockImage";
 import { StockActionsMenu } from "./StockActionsMenu";
@@ -25,9 +24,6 @@ export function StockCard({ stock }: Props) {
             className="absolute inset-0 w-full h-full object-cover"
             iconClassName="size-10 sm:size-16"
           />
-          <div className="absolute top-1.5 left-1.5 sm:top-4 sm:left-4 rounded-md p-0.5 sm:px-1.5 sm:py-0.5">
-            <MarketplaceLogo marketplace={stock.marketplace} hideLabel />
-          </div>
           <div className="absolute top-1.5 right-1.5 sm:top-4 sm:right-4">
             <StockStatusBadge status={stock.status} />
           </div>

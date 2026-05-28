@@ -19,8 +19,6 @@ export function EstoqueCardsView({ list }: Props) {
   const {
     search,
     setSearch,
-    marketplace,
-    setMarketplace,
     status,
     setStatus,
     page,
@@ -46,8 +44,6 @@ export function EstoqueCardsView({ list }: Props) {
       <StockFilters
         search={search}
         onSearchChange={setSearch}
-        marketplace={marketplace}
-        onMarketplaceChange={setMarketplace}
         status={status}
         onStatusChange={setStatus}
       />
