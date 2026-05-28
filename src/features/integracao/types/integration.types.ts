@@ -2,18 +2,27 @@ import type { Marketplace } from "@/shared/types/marketplace.types";
 
 export type IntegrationStatus =
   | "connected"
-  | "disconnected"
   | "syncing"
-  | "error";
+  | "error"
+  | "disconnected";
 
 export type Integration = {
   id: string;
   name: string;
+  api_key: string;
   marketplace: Marketplace;
   status: IntegrationStatus;
-  lastSyncAt: string;
-  products: number;
-  orders: number;
+  stock_sync: boolean;
+  order_sync: boolean;
+};
+
+export type IntegrationRequest = {
+  name: string;
+  api_key: string;
+  marketplace: Marketplace;
+  status?: IntegrationStatus;
+  stock_sync?: boolean;
+  order_sync?: boolean;
 };
 
 export type MarketplaceOption = {

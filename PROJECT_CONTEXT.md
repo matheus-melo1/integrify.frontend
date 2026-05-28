@@ -8,7 +8,7 @@
 - **Forms:** React Hook Form + Zod
 - **Routing:** React Router DOM 7
 - **HTTP:** Axios
-- **Auth:** JWT (custom backend) — atualmente stub mock
+- **Auth:** JWT (custom backend) — integrado via `authService` + `useLoginMutation`
 - **Testing:** Vitest + Testing Library (RTL)
 - **Utilities:** lodash, date-fns
 
@@ -54,9 +54,32 @@ features/{name}/
 ├── pages/         # Page components (composition)
 ├── services/      # TanStack Query hooks (API calls)
 ├── schemas/       # Zod validation schemas
-├── types/         # TypeScript interfaces
+├── types/         # TypeScript interfaces and API models
 ├── store/         # Zustand store (only if needed)
 └── index.ts       # Barrel export (public API)
+```
+
+### Types vs Services — separation of concerns
+
+- `types/` — **all data models**: domain entities, API request/response DTOs, form value types.  
+  Examples: `Stock`, `LoginRequest`, `LoginResponse`, `UserResponse`.
+- `services/` — **only**: service contract interface (`IXxxService`), class implementation, and helper functions (e.g. `toBody`).  
+  Services **never** declare model interfaces — they import them from `../types/`.
+
+```ts
+// ✅ correct
+// feature/types/auth.types.ts
+export interface LoginRequest { email: string; password: string; }
+
+// feature/services/auth.service.ts
+import type { LoginRequest } from "../types/auth.types";
+interface IAuthService { login(body: LoginRequest): Promise<LoginResponse>; }
+class AuthService implements IAuthService { ... }
+export const authService = new AuthService();
+
+// ❌ wrong — model declared inside service file
+// feature/services/auth.service.ts
+export interface LoginRequest { ... } // ← move to types/
 ```
 
 ## Code Conventions

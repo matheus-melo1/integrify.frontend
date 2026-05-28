@@ -18,12 +18,20 @@ export const useRegister = () => {
     if (data.password !== data.confirmPassword) {
       return;
     }
-    setAuth("mock-token", {
-      id: "1",
-      name: data.name,
-      email: data.email,
-      role: "admin",
-    });
+    setAuth(
+      {
+        accessToken: "mock-token",
+        refreshToken: "mock-refresh",
+        expiresAt: "",
+        refreshExpiresAt: "",
+      },
+      {
+        id: "1",
+        name: data.name,
+        email: data.email,
+        role: "admin",
+      },
+    );
     navigate(ROUTES.DASHBOARD);
   };
 

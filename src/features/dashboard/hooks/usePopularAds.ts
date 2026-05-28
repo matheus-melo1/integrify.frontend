@@ -8,7 +8,7 @@ const ADS: Ad[] = [
     name: "Fone Bluetooth Pro",
     seller: { id: "s1", name: "Samuel" },
     addedAt: "14/02/2024",
-    marketplace: "mercado-livre",
+    marketplace: "mercadolibre",
     followers: [
       { id: "f1", name: "A" },
       { id: "f2", name: "B" },
@@ -22,7 +22,7 @@ const ADS: Ad[] = [
     name: "Cadeira Gamer X",
     seller: { id: "s2", name: "Hossein" },
     addedAt: "09/23/2025",
-    marketplace: "shopee",
+    marketplace: "shoppe",
     followers: [
       { id: "f4", name: "D" },
       { id: "f5", name: "E" },
@@ -50,7 +50,7 @@ const ADS: Ad[] = [
     name: "Air Fryer 5L",
     seller: { id: "s4", name: "Stephanie" },
     addedAt: "11/18/2025",
-    marketplace: "magalu",
+    marketplace: "mercadolibre",
     followers: [
       { id: "f10", name: "J" },
       { id: "f11", name: "K" },
@@ -63,7 +63,7 @@ const ADS: Ad[] = [
     name: "Smartwatch Plus",
     seller: { id: "s5", name: "Renato" },
     addedAt: "02/03/2026",
-    marketplace: "amazon-us",
+    marketplace: "amazon",
     followers: [
       { id: "f12", name: "L" },
       { id: "f13", name: "M" },

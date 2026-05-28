@@ -39,7 +39,7 @@ export const AnimatedOutlet = () => {
             y: { type: "spring", stiffness: 260, damping: 30, mass: 0.9 },
             opacity: { duration: 0.35, ease: "easeOut" },
           }}
-          className="absolute inset-0 p-5 h-full w-full overflow-y-auto"
+          className="absolute inset-0 p-5 h-full w-full overflow-y-auto max-md:pb-28"
         >
           <Suspense fallback={null}>{element}</Suspense>
         </motion.div>
