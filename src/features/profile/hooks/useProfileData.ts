@@ -81,7 +81,7 @@ export const useProfileData = (): Profile => {
       role,
       username,
       avatarUrl:
-        "https://i.pinimg.com/originals/0e/99/fb/0e99fb7da38a7d3bd2062895f9e07741.gif",
+        "https://img.icons8.com/liquid-glass/96/user-male-circle.png",
       headline: "Operador de marketplaces",
       location: "São Paulo, BR",
       bio: "Cuido das integrações e do estoque das nossas lojas em diferentes marketplaces.",

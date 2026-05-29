@@ -5,7 +5,7 @@ import { SidebarUserDropdown } from "./SidebarUserDropdown";
 import { useSidebarUserMenu } from "@/shared/hooks/useSidebarUserMenu";
 
 const AVATAR_URL =
-  "https://i.pinimg.com/originals/0e/99/fb/0e99fb7da38a7d3bd2062895f9e07741.gif";
+  "https://img.icons8.com/liquid-glass/96/user-male-circle.png";
 
 const initialsOf = (name: string) =>
   name

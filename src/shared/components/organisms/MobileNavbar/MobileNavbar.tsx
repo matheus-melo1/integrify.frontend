@@ -103,7 +103,7 @@ export function MobileNavbar() {
               <GradientBorder className="p-[1.2px] from-white/40! via-neutral-900/40!  to-white/30!">
                 <Avatar className={"w-11.5! h-11.5!"}>
                   <AvatarImage
-                    src="https://i.pinimg.com/originals/0e/99/fb/0e99fb7da38a7d3bd2062895f9e07741.gif"
+                    src="https://img.icons8.com/liquid-glass/96/user-male-circle.png"
                     alt="profile_pic"
                   />
                   <AvatarFallback>MA</AvatarFallback>
